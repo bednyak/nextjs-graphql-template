@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+
+  mysql-db:
+    image: mysql:5.6
+    container_name: my-mysql-db
+    restart: unless-stopped
+    networks:
+      - my-network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_ROOT_PASSWORD} # user is 'root'
+      MYSQL_DATABASE: test-db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-db:/var/lib/mysql
+
+networks:
+  my-network:
+    name: my_network
+    driver: bridge
+volumes:
+  mysql-db:
+    name: mysql_db
+    driver: local
